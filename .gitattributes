@@ -1,0 +1,5 @@
+*                 text=auto
+*.*ignore         text
+
+# GitHub Linguist overrides
+css/w3.css        -linguist-vendored
