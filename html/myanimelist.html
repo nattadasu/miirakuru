@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Miirakuru Auth Page</title>
+        <link rel="stylesheet" href="css/w3.css">
+        <!-- favicons -->
+        <link rel="icon" type="image/png" href="assets/icon.png">
+    </head>
+    <body>
+        <header class="w3-container w3-teal">
+            <h1 class="w3-center">Miirakuru Auth Page</h1>
+        </header>
+        <section class="w3-container w3-padding-16">
+            <div class="w3-card-4">
+                <h2 class="w3-container w3-teal w3-padding-16">Authentication Status</h2>
+                <div class="w3-panel">
+                    <p id="statusMessage"></p>
+                    <button type="button" id="closeButton" class="w3-button w3-teal" onclick="window.close()">Close</button>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            // Check if the URL contains the "code" parameter to determine authentication success
+            var urlParams = new URLSearchParams(window.location.search);
+            var code = urlParams.get('code');
+            var statusMessage = document.getElementById('statusMessage');
+
+            if (code) {
+                statusMessage.textContent = 'Authentication successful!';
+            } else {
+                statusMessage.textContent = 'Authentication not successful. Please check your credentials and try again.';
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Miirakuru Auth Page</title>
+        <link rel="stylesheet" href="css/w3.css">
+        <!-- favicons -->
+        <link rel="icon" type="image/png" href="assets/icon.png">
+    </head>
+    <body>
+        <header class="w3-container w3-teal">
+            <h1 class="w3-center">Miirakuru Auth Page</h1>
+        </header>
+        <div class="w3-container w3-padding-16">
+            <article class="w3-card-4">
+                <h2 class="w3-container w3-teal w3-padding-16">Auth yourself on MyAnimeList</h2>
+                <div class="w3-panel">
+                    <p>Click on the button below to auth yourself on MyAnimeList</p>
+                    <a id="mal_auth" class="w3-button w3-indigo" href="https://myanimelist.net/v1/oauth2/authorize?response_type=code&client_id=0b4b8b8e1bdaa4b0b2b8b8e1bdaa4b0b&code_challenge=0b4b8b8e1bdaa4b0b2b8b8e1bdaa4b0b&code_challenge_method=plain&state=0b4b8b8e1bdaa4b0b2b8b8e1bdaa4b0b">Auth on MyAnimeList</a>
+                    <p><em>If the botton is not visible, most likely you've been authenticated</em></p>
+                </div>
+            </article>
+
+            <article class="w3-card-4">
+                <h2 class="w3-container w3-teal w3-padding-16">Auth on Other Sites</h2>
+                <div class="w3-panel">
+                    <div class="w3-panel w3-blue">
+                        <h3>Information!</h3>
+                        <p>Although you can use this page to authenticate, we prefer to authenticate via CLI</p>
+                    </div>
+                    <p>If you want to sync to other platform that requires OAuth, you can do it by clicking any services you want below</p>
+                    <a href="" title="AniList" class="w3-button w3-blue">AniList</a>
+                    <a href="" title="Shikimori" class="w3-button w3-dark-gray">Shikimori</a>
+                    <a href="" title="SIMKL" class="w3-button w3-black">SIMKL</a>
+                    <a href="" title="Trakt" class="w3-button w3-red">Trakt</a>
+                    <p><em>However, if it's only require you to fill username and password or obtaining PAT, you can skip this step, which are:</em></p>
+                    <ul>
+                        <li>Annict</li>
+                        <li>Bangumi</li>
+                        <li>Kaize</li>
+                        <li>Kitsu</li>
+                        <li>LiveChart</li>
+                        <li>Nautiljon</li>
+                        <li>Otak-Otaku</li>
+                    </ul>
+                </div>
+            </article>
+        </div>
+        <script lang="js">
+            // Check if the file exists
+            fetch("../secrets/myanimelist.json")
+                .then(response => {
+                    if (response.ok) {
+                        // File exists, hide the "mal_auth" link
+                        document.getElementById("mal_auth").style.display = "none";
+                        console.log("File exists");
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    console.log("File doesn't exist");
+                });
+        </script>
+    </body>
+</html>
