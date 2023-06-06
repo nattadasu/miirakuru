@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+interactions-py = "*"
+requests = "*"
+aiohttp = "*"
+flask = {extras = ["async"], version = "*"}
+python-dotenv = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
