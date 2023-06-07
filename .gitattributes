@@ -2,4 +2,6 @@
 *.*ignore         text
 
 # GitHub Linguist overrides
-css/w3.css        linguist-vendored
+css/w3.css                     linguist-vendored
+api/myanimelist/**             linguist-vendored
+api/myanimelist/__init__.py   -linguist-vendored
