@@ -144,4 +144,4 @@ This software was inspired or made possible by the following:
 [support]: https://discord.gg/UKvMEZvaXc
 [yuuko]: https://github.com/YuuCorp/Yuuko
 [wc]: https://whitecat.app
-[ryuu]: https:/github.com/nattadasu/ryuuRyuusei
+[ryuu]: https://github.com/nattadasu/ryuuRyuusei
