@@ -23,6 +23,32 @@ interface to the software instead of prefixed/text command.
 Miirakuru **does not** have invitable link, and anyone who interested using it
 must self-host this bot instead.
 
+## Planned Features
+
+### General
+
+* [ ] MyAnimeList OAuth2 Authentication
+* [ ] Auto Backup data
+* [ ] Show anime information
+* [ ] Update tracking data
+* [ ] Logs activity
+* [ ] Broadcast user activity to a channel from RSS/Atom
+
+### Anime list sync from MyAnimeList
+
+* [ ] AniList
+* [ ] Annict
+* [ ] Bangumi
+* [ ] Kaize
+* [ ] Kitsu
+* [ ] Notify.moe
+  * If this is possible, user must grab their credential via cookie instead,
+    as there's no way to authenticate user with API
+* [ ] Otak Otaku
+* [ ] Shikimori
+* [ ] SIMKL
+* [ ] Trakt
+
 ## Set-Up
 
 ### Prerequisites
@@ -33,7 +59,8 @@ packages/apps to be installed first:
 1. [Git](https://git-scm.com)
 2. [Python 3.10](https://www.python.org) or greater
 
-Additionally, you can install [`pipenv`](https://github.com/pypa/pipenv) as dependency manager instead of using `virtualenv` and `pip`.
+Additionally, you can install [`pipenv`](https://github.com/pypa/pipenv) as
+dependency manager instead of using `virtualenv` and `pip`.
 
 ## Cloning and Installing Required Packages
 
