@@ -30,10 +30,10 @@ class BaseOauthToken:
 
     def is_expired(self):
         """Check if token is expired"""
-        if self.created_at:
+        if self.created_at and self.expires_in:
             return self.created_at + self.expires_in < int(time.time())
         raise ValueError(
-            "It seems `created_at` does not have type of int as a value")
+            "It seems `created_at` or `expires_in` does not have type of int as a value")
 
     def to_dict(self):
         """Convert to dict"""
