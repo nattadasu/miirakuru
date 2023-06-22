@@ -6,4 +6,4 @@ css/w3.css                     linguist-vendored
 api/myanimelist/**             linguist-vendored
 api/myanimelist/__init__.py   -linguist-vendored
 
-app.config                     linguist-language=INI
+app.config                     linguist-language=toml

@@ -1,6 +1,6 @@
 {
     "python.analysis.typeCheckingMode": "strict",
     "files.associations": {
-        ".config": "properties"
+        ".config": "toml"
     },
 }
