@@ -34,20 +34,62 @@ must self-host this bot instead.
 * [ ] Logs activity
 * [ ] Broadcast user activity to a channel from RSS/Atom
 
-### Anime list sync from MyAnimeList
+### Sync
 
-* [ ] AniList
-* [ ] Annict
-* [ ] Bangumi
-* [ ] Kaize
-* [ ] Kitsu
-* [ ] Notify.moe
-  * If this is possible, user must grab their credential via cookie instead,
-    as there's no way to authenticate user with API
-* [ ] Otak Otaku
-* [ ] Shikimori
-* [ ] SIMKL
-* [ ] Trakt
+```mermaid
+---
+title: Anime Sync
+---
+flowchart LR
+  subgraph Database
+    root[(Miirakuru)]
+  end
+  subgraph Two-Way Sync
+    root <==> mal[MyAnimeList]
+    mal --> Shikimori
+  end
+  subgraph One-Way Sync
+    root --> AniList
+    root --> Annict
+    root --> Bangumi
+    root --> Kitsu
+    root --> smk[SIMKL]
+    smk --> TMDB
+    smk --> Trakt
+  end
+  subgraph Experimental
+    root -.-> aniDB
+    root -.-> Kaize
+    root -.-> LiveChart
+    root -.-> moe[Notify.moe]
+    root -.-> Nautiljon
+    root -.-> oo[Otak Otaku]
+  end
+```
+
+```mermaid
+---
+title: Manga Sync
+---
+flowchart LR
+  subgraph Database
+    root[(Miirakuru)]
+  end
+  subgraph Two-Way Sync
+    root <==> mal[MyAnimeList]
+    mal --> Shikimori
+  end
+  subgraph One-Way Sync
+    root --> AniList
+    root --> Kitsu
+    root --> Bangumi
+    root --> MangaUpdates
+  end
+  subgraph Experimental
+    root -.-> MangaDex
+    root -.-> Kaize
+  end
+```
 
 ## Set-Up
 
@@ -144,4 +186,4 @@ This software was inspired or made possible by the following:
 [support]: https://discord.gg/UKvMEZvaXc
 [yuuko]: https://github.com/YuuCorp/Yuuko
 [wc]: https://whitecat.app
-[ryuu]: https://github.com/nattadasu/ryuuRyuusei
+[ryuu]: https:/github.com/nattadasu/ryuuRyuusei
