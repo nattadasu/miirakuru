@@ -25,7 +25,7 @@ def flask_keep_quiet():
 
     def echo(
         message: t.Optional[t.Any] = None,
-        file: t.Optional[t.IO] = None,
+        file: t.Optional[t.IO] = None,  # type: ignore
         nl: bool = True,
         err: bool = False,
         color: t.Optional[bool] = None,
@@ -82,15 +82,27 @@ async def get_code(port: int = 8000) -> str:
     should_kill = Value("b", False)
 
     @app.route("/callback", methods=["GET"])
-    def callback():
+    def callback() -> str:  # type: ignore
+        """
+        The callback route.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        str
+            The response.
+        """
         nonlocal code, should_kill
         code.value = request.args.get("code") or ""
-        should_kill.value = code.value != ""
+        should_kill.value = code.value != ""  # type: ignore
         return "Done"
 
     server.start()
 
-    while not should_kill.value:
+    while not should_kill.value:  # type: ignore
         await asyncio.sleep(1)
 
     server.terminate()

@@ -146,7 +146,7 @@ class Auth:
 
         self.is_authenticated = True
 
-    async def get_token(self, code: str) -> dict:
+    async def get_token(self, code: str) -> AuthData:
         """
         Gets the token from the code.
 
@@ -176,7 +176,7 @@ class Auth:
                 response.raise_for_status()
                 return await response.json()
 
-    async def get_new_token(self) -> dict:
+    async def get_new_token(self) -> AuthData:
         """
         Gets a new token from the refresh token.
 
