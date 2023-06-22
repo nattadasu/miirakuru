@@ -9,6 +9,17 @@ import asyncio
 
 
 def flask_keep_quiet():
+    """
+    Prevents Flask from printing to stdout.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None
+    """
     log = logging.getLogger("werkzeug")
     log.setLevel(logging.ERROR)
 
@@ -20,13 +31,47 @@ def flask_keep_quiet():
         color: t.Optional[bool] = None,
         **styles: t.Any,
     ) -> None:
-        pass
+        """
+        A dummy function to replace click.echo and click.secho.
+
+        Parameters
+        ----------
+        message: Optional[Any]
+            The message to print.
+        file: Optional[IO]
+            The file to print to.
+        nl: bool
+            Whether to print a newline or not.
+        err: bool
+            Whether to print to stderr or not.
+        color: Optional[bool]
+            Whether to print in color or not.
+        **styles: Any
+            The styles to print with.
+
+        Returns
+        -------
+        None
+        """
 
     click.echo = echo
     click.secho = echo
 
 
 async def get_code(port: int = 8000) -> str:
+    """
+    Gets the code from the redirect uri.
+
+    Parameters
+    ----------
+    port: int
+        The port to run the server on.
+
+    Returns
+    -------
+    str
+        The code.
+    """
     flask_keep_quiet()
 
     app = Flask("ServiceShouldStop")
@@ -55,6 +100,21 @@ async def get_code(port: int = 8000) -> str:
 
 
 async def main():
+    """
+    The main function.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None
+
+    Stdout
+    ------
+    The code.
+    """
     code = await get_code()
     print(code)
 

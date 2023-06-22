@@ -10,6 +10,7 @@ from .listener import get_code
 
 
 class AuthData(TypedDict):
+    """AuthData type hint."""
     token_type: str
     expires_in: int
     access_token: str
@@ -17,14 +18,35 @@ class AuthData(TypedDict):
 
 
 class Auth:
+    """Auth class for MyAnimeList."""
     def __init__(
         self,
         client_id: str,
         client_secret: str,
         redirect_uri: str,
         state: str = "RequestForToken",
-        cache_file: Union[str, Path] = "./cache.json",
+        cache_file: Union[str, Path] = "./secrets/myanimelist.json",
     ) -> None:
+        """
+        Initializes the Auth class.
+
+        Parameters
+        ----------
+        client_id: str
+            The client id.
+        client_secret: str
+            The client secret.
+        redirect_uri: str
+            The redirect uri.
+        state: str
+            The state.
+        cache_file: Union[str, Path]
+            The cache file.
+
+        Returns
+        -------
+        None
+        """
         self.client_id = client_id
         self.client_secret = client_secret
         self.redirect_uri = redirect_uri
@@ -44,7 +66,15 @@ class Auth:
         self.is_authenticated = False
         self.auth_data: Union[None, AuthData] = None
 
-    async def get_cache(self):
+    async def get_cache(self) -> bool:
+        """
+        Gets the cache file.
+
+        Returns
+        -------
+        bool
+            Whether the cache file exists or not.
+        """
         if self.cache_file.exists():
             with open(self.cache_file) as file:
                 self.auth_data = json.load(file)
@@ -60,6 +90,14 @@ class Auth:
         return True
 
     async def expired(self) -> bool:
+        """
+        Checks if the token is expired.
+
+        Returns
+        -------
+        bool
+            Whether the token is expired or not.
+        """
         if not self.auth_data:
             return True
 
@@ -70,7 +108,19 @@ class Auth:
             async with session.get(url, headers=headers) as response:
                 return response.status != 200
 
-    async def authenticate(self):
+    async def authenticate(self) -> None:
+        """
+        Authenticates the user.
+
+        Raises
+        ------
+        Exception
+            If there is a problem getting the auth data, or the token.
+
+        Returns
+        -------
+        None
+        """
         await self.get_cache()
         if not await self.expired():
             return
@@ -96,7 +146,20 @@ class Auth:
 
         self.is_authenticated = True
 
-    async def get_token(self, code: str):
+    async def get_token(self, code: str) -> dict:
+        """
+        Gets the token from the code.
+
+        Parameters
+        ----------
+        code: str
+            The code to get the token from.
+
+        Returns
+        -------
+        dict
+            The token.
+        """
         base_url = "https://myanimelist.net/v1/oauth2/token"
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         data = {
@@ -113,7 +176,15 @@ class Auth:
                 response.raise_for_status()
                 return await response.json()
 
-    async def get_new_token(self):
+    async def get_new_token(self) -> dict:
+        """
+        Gets a new token from the refresh token.
+
+        Returns
+        -------
+        dict
+            The new token.
+        """
         if not self.auth_data:
             raise Exception("No Auth data or refresh_token")
         if not self.auth_data.get("refresh_token"):
@@ -136,6 +207,14 @@ class Auth:
 
     @staticmethod
     async def listen_for_auth_code() -> str:
+        """
+        Listens for the auth code.
+
+        Returns
+        -------
+        str
+            The auth code.
+        """
         code = await get_code()
 
         if not code:
@@ -145,5 +224,13 @@ class Auth:
 
     @staticmethod
     def get_new_code_verifier() -> str:
+        """
+        Gets a new code verifier.
+
+        Returns
+        -------
+        str
+            The code verifier.
+        """
         token = secrets.token_urlsafe(100)
         return token[:128]
