@@ -8,7 +8,8 @@
 [![Interactions.py Version](https://img.shields.io/badge/interactions--py-5.6.0-blue?logo=python&logoColor=white)][ipy]
 [![Discord Server](https://img.shields.io/discord/589128995501637655?color=%235865F2&logo=discord&logoColor=white)][support]
 
-Easily sync your MAL to several supported sites via Discord, only for self-host!
+Easily sync your Anime and Manga to several supported sites via Discord, only
+for self-host!
 
 ## About
 
@@ -33,61 +34,119 @@ must self-host this bot instead.
 * [ ] Update tracking data
 * [ ] Logs activity
 * [ ] Broadcast user activity to a channel from RSS/Atom
+* [x] Better config management using YAML for secrets and TOML for general
+      configurations.
 
-### Sync
+### Anime Sync Databases
+
+* **Main**
+  * [ ] MyAnimeList
+  * [ ] AniList
+  * [ ] Kitsu
+  * [ ] SIMKL
+* **One-Way Sync**
+  * [ ] aniDB
+  * [ ] Annict
+  * [ ] Bangumi
+  * [ ] Shikimori
+  * [ ] The Movie Database
+  * [ ] Trakt
+* **Experimental**
+  * [ ] Kaize
+  * [ ] LiveChart
+  * [ ] Nautiljon
+  * [ ] Notify.moe
+  * [ ] Otak Otaku
+
+### Manga Sync Databases
+
+* **Main**
+  * [ ] MyAnimeList
+  * [ ] AniList
+  * [ ] Kitsu
+  * [ ] MangaUpdates
+* **One-Way Sync**
+  * [ ] Bangumi
+* **Experimental**
+  * [ ] Kaize
+  * [ ] MangaDex
+
+## Methodology
+
+As each platform has different way to store their data and the assigned ID, this
+becomes a challenge to sync the data between platforms. To solve this, Miirakuru
+uses a method called **ID Mapping**.
+
+In some situation, the ID from one platform can be used to get the ID from
+another platform interchangeably. For example, the ID from MyAnimeList can be
+used to get the ID from Shikimori, and vice versa. This is because Shikimori
+retrieves their data from MyAnimeList.
+
+However, this is not always the case. For example, the ID from MyAnimeList
+cannot be used to get the ID from AniList, and vice versa. To solve this, we
+need to use a third-party API to get the ID from another platform. If the
+API does not support the platform, then we need to ask the user to provide the
+ID from the platform by searching from the platform itself or provide the ID
+from the platform.
 
 ```mermaid
----
-title: Anime Sync
----
-flowchart LR
-  subgraph Database
-    root[(Miirakuru)]
-  end
-  subgraph Two-Way Sync
-    root <==> mal[MyAnimeList]
-    mal --> Shikimori
-  end
-  subgraph One-Way Sync
-    root --> AniList
-    root --> Annict
-    root --> Bangumi
-    root --> Kitsu
-    root --> smk[SIMKL]
-    smk --> TMDB
-    smk --> Trakt
-  end
-  subgraph Experimental
-    root -.-> aniDB
-    root -.-> Kaize
-    root -.-> LiveChart
-    root -.-> moe[Notify.moe]
-    root -.-> Nautiljon
-    root -.-> oo[Otak Otaku]
-  end
-```
+sequenceDiagram
+  actor user as User on Discord
+  participant root as Miirakuru
+  participant ani as AnimeAPI
+  participant site as Site
 
-```mermaid
----
-title: Manga Sync
----
-flowchart LR
-  subgraph Database
-    root[(Miirakuru)]
+  alt Adding Anime to Database
+    user->>root: Add anime
+    activate user
+    par Getting ID
+      root->>+ani: Get anime ID
+      activate ani
+      ani-->>root: Post anime ID
+    and if ID is not found
+      root->>+site: Get anime ID
+      site-->>-root: Post anime ID
+    and If site does not support API
+      site-->>user: Ask user to provide anime ID
+      user->>root: Provide anime ID
+    end
+    deactivate ani
+    root->>root: Add anime to database with UUID
+    alt If user activates MyAniLi sync
+      root->>+site: Save encrypted JSON to title's comment/note
+      site-->>-root: Confirms if anime is added
+    end
+    root-->>user: Confirms if anime is added
+    deactivate user
   end
-  subgraph Two-Way Sync
-    root <==> mal[MyAnimeList]
-    mal --> Shikimori
+
+  alt Update Anime in Database
+    user->>root: Update anime
+    activate user
+    par Update data
+      root->>site: Post updated data
+      activate site
+      site-->>root: Confirms if anime is updated
+    and If user activates MyAniLi sync
+      root->>+site: Save encrypted JSON to title's comment/note, if modified
+      site-->>-root: Confirms if anime is updated
+    end
+    deactivate site
+    root-->>user: Confirms if anime is updated
+    deactivate user
   end
-  subgraph One-Way Sync
-    root --> AniList
-    root --> Kitsu
-    root --> Bangumi
-    root --> MangaUpdates
-  end
-  subgraph Experimental
-    root -.-> MangaDex
-    root -.-> Kaize
+
+  alt Showing Anime Information
+    user->>root: Show anime
+    activate user
+    Note over root: Priority: AniList, MyAnimeList, MangaUpdates, Kitsu, SIMKL, [...]
+    root->>root: Pick platform with highest priority
+    root->>site: Get anime information
+    activate site
+      site-->>root: Post anime information
+    deactivate site
+    root-->>user: Post anime information
+    deactivate user
   end
 ```
 
@@ -150,7 +209,7 @@ dependency manager instead of using `virtualenv` and `pip`.
      pipenv run main.py
      ```
 
-   * Using `virtualenv`:
+   * [ ] Using `virtualenv`:
 
      ```bash
      python main.py
