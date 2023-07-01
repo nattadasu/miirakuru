@@ -45,18 +45,19 @@ must self-host this bot instead.
   * [ ] Kitsu
   * [ ] SIMKL
 * **One-Way Sync**
-  * [ ] aniDB
   * [ ] Annict
   * [ ] Bangumi
   * [ ] Shikimori
   * [ ] The Movie Database
   * [ ] Trakt
 * **Experimental**
-  * [ ] Kaize
-  * [ ] Notify.moe
-  * [ ] Otak Otaku
+  * [ ] Kaize — Trying to mock browser API Request
+  * [ ] Notify.moe — User may require to provide their own Cookie value.
+  * [ ] Otak Otaku — Trying to mock browser API Request
 * **Won't Supported**
   * [x] Anime-Planet — No API, using mock environment required CAPTCHA.
+  * [ ] AniDB — API uses UDP as main interface rather HTTPS, which could cause
+        unexpected issues raised from unexperienced developer (@nattadasu).
   * [x] aniSearch — No API, using mock environment required CAPTCHA.
   * [x] LiveChart — Can't fool User-Agent; it would ask CAPTCHA.
   * [x] Nautiljon — No API, using mock environment required CAPTCHA.
@@ -71,9 +72,10 @@ must self-host this bot instead.
 * **One-Way Sync**
   * [ ] Bangumi
 * **Experimental**
-  * [ ] Kaize
-  * [ ] MangaDex
-* **Won't Supported**
+  * [ ] Kaize — Trying to mock browser API Request
+  * [ ] Mangadex — Until MD team allows OAuth with Client Session with their new
+        API and Authorization method, it might be impossible for now.
+* **Won't t Supported**
   * [x] Anime-Planet — No API, using mock environment required CAPTCHA.
   * [x] aniSearch — No API, using mock environment required CAPTCHA.
   * [x] Nautiljon — No API, using mock environment required CAPTCHA.
@@ -252,4 +254,4 @@ This software was inspired or made possible by the following:
 [support]: https://discord.gg/UKvMEZvaXc
 [yuuko]: https://github.com/YuuCorp/Yuuko
 [wc]: https://whitecat.app
-[ryuu]: https:/github.com/nattadasu/ryuuRyuusei
+[ryuu]: https://github.com/nattadasu/ryuuRyuusei
