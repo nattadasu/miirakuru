@@ -53,10 +53,13 @@ must self-host this bot instead.
   * [ ] Trakt
 * **Experimental**
   * [ ] Kaize
-  * [ ] LiveChart
-  * [ ] Nautiljon
   * [ ] Notify.moe
   * [ ] Otak Otaku
+* **Won't Supported**
+  * [x] Anime-Planet — No API, using mock environment required CAPTCHA.
+  * [x] aniSearch — No API, using mock environment required CAPTCHA.
+  * [x] LiveChart — Can't fool User-Agent; it would ask CAPTCHA.
+  * [x] Nautiljon — No API, using mock environment required CAPTCHA.
 
 ### Manga Sync Databases
 
@@ -70,6 +73,10 @@ must self-host this bot instead.
 * **Experimental**
   * [ ] Kaize
   * [ ] MangaDex
+* **Won't Supported**
+  * [x] Anime-Planet — No API, using mock environment required CAPTCHA.
+  * [x] aniSearch — No API, using mock environment required CAPTCHA.
+  * [x] Nautiljon — No API, using mock environment required CAPTCHA.
 
 ## Methodology
 
