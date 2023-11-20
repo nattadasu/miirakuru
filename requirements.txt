@@ -1,7 +1,10 @@
 -i https://pypi.org/simple
 aiohttp
 flask[async]
-interactions-py==5.6.0
+interactions.py==5.10.0
+keyring
 python-dotenv
 pyyaml
 requests
+SecretStorage; sys_platform == 'linux'
+typer[all]

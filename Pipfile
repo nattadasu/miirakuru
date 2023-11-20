@@ -4,12 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-interactions-py = "*"
-requests = "*"
 aiohttp = "*"
 flask = {extras = ["async"], version = "*"}
+interactions-py = "5.10.0"
+keyring = "*"
 python-dotenv = "*"
 pyyaml = "*"
+requests = "*"
+SecretStorage = {version = "*", markers = "sys_platform == 'linux'"}
+typer = {extras = ["all"], version = "*"}
 
 [dev-packages]
 
