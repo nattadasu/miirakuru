@@ -34,8 +34,8 @@ must self-host this bot instead.
 * [ ] Update tracking data
 * [ ] Logs activity
 * [ ] Broadcast user activity to a channel from RSS/Atom
-* [x] Better config management using YAML for secrets and TOML for general
-      configurations.
+* [ ] Use TOML for configuration
+* [ ] Save secret data to keyring available on the system
 
 ### Anime Sync Databases
 
@@ -48,13 +48,22 @@ must self-host this bot instead.
   * [ ] Annict
   * [ ] Bangumi
   * [ ] Shikimori
-  * [ ] The Movie Database
-  * [ ] Trakt
+  * [ ] Trakt &mdash; Unless [BetterAnimeTraktMapper][BATM] finished, Trakt
+        will be one-way sync.
 * **Experimental**
   * [ ] Kaize — Trying to mock browser API Request
   * [ ] Notify.moe — User may require to provide their own Cookie value.
   * [ ] Otak Otaku — Trying to mock browser API Request
 * **Won't Supported**
+
+  > [!NOTE]
+  >
+  > All of the sites below does not have API, and using mock environment will
+  > required CAPTCHA.
+  >
+  > Using `cloudscraper` *could* solve this, but it can block async request
+  > for the bot to run.
+
   * [x] Anime-Planet — No API, using mock environment required CAPTCHA.
   * [ ] AniDB — API uses UDP as main interface rather HTTPS, which could cause
         unexpected issues raised from unexperienced developer (@nattadasu).
@@ -159,6 +168,18 @@ sequenceDiagram
   end
 ```
 
+## Third-Party Compatibility
+
+Miirakuru allows third-party to access the API to manage user's library via
+HTTP REST request. The API is available on `/api/v1/` endpoint.
+
+Additionally, Miirakuru also has webhook support to Taiga and similar application
+to update user's library without using Discord bot. Miirakuru will aim to support
+Jellyfin and Kodi in the future.
+
+Then, if user opted in MyAniLi sync, Miirakuru will save the required data by
+MyAniLi to the title's comment/note for each platform signed in.
+
 ## Set-Up
 
 ### Prerequisites
@@ -168,6 +189,16 @@ packages/apps to be installed first:
 
 1. [Git](https://git-scm.com)
 2. [Python 3.10](https://www.python.org) or greater
+
+And your system must fulfill these requirements:
+
+* Windows:
+  * Windows 10 or greater
+* Linux:
+  * systemd as init system
+  * FreeDesktop.org-compliant Secret Service implementation.
+* macOS:
+  * macOS 11 (Big Sur) or greater
 
 Additionally, you can install [`pipenv`](https://github.com/pypa/pipenv) as
 dependency manager instead of using `virtualenv` and `pip`.
@@ -249,6 +280,7 @@ This software was inspired or made possible by the following:
 
 <!-- References -->
 [aniapi]: https://github.com/nattadasu/animeApi
+[BATM]: http://github.com/nattadasu/BetterAnimeTraktMapper
 [ipy]: https://pypi.org/project/discord-py-interactions/
 [lic]: LICENSE
 [support]: https://discord.gg/UKvMEZvaXc
